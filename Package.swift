@@ -12,8 +12,8 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "CombineSchedulers",
-      targets: ["CombineSchedulers"]
+      name: "OpenCombineSchedulers",
+      targets: ["OpenCombineSchedulers"]
     )
   ],
   dependencies: [
