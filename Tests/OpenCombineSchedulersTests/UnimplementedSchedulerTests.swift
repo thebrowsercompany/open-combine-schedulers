@@ -1,7 +1,7 @@
 #if compiler(>=5.4)
   #if canImport(Combine)
     import Combine
-    import CombineSchedulers
+    import OpenCombineSchedulers
     import XCTest
 
     final class UnimplementedSchedulerTests: XCTestCase {

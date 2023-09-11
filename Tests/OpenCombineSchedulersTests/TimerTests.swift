@@ -1,6 +1,6 @@
 #if canImport(Combine)
   import Combine
-  import CombineSchedulers
+  import OpenCombineSchedulers
   import XCTest
 
   final class TimerTests: XCTestCase {
