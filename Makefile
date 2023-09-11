@@ -6,22 +6,22 @@ PLATFORM_WATCHOS = watchOS Simulator,name=Apple Watch Series 5 - 44mm
 test:
 	swift test
 	xcodebuild test \
-		-scheme combine-schedulers \
+		-scheme open-combine-schedulers \
 		-destination platform="$(PLATFORM_IOS)"
 	xcodebuild test \
-		-scheme combine-schedulers \
+		-scheme open-combine-schedulers \
 		-destination platform="$(PLATFORM_MACOS)"
 	xcodebuild test \
-		-scheme combine-schedulers \
+		-scheme open-combine-schedulers \
 		-destination platform="$(PLATFORM_TVOS)"
 	xcodebuild build \
-		-scheme combine-schedulers \
+		-scheme open-combine-schedulers \
 		-destination platform="$(PLATFORM_WATCHOS)"
 
 build-for-library-evolution:
 	swift build \
 		-c release \
-		--target CombineSchedulers \
+		--target OpenCombineSchedulers \
 		-Xswiftc -emit-module-interface \
 		-Xswiftc -enable-library-evolution
 
