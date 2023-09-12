@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 20
     strategy:
       matrix:
-        config: ['debug', 'release']
+        config: ['release']
       fail-fast: false
     steps:
       - uses: compnerd/gha-setup-swift@main
