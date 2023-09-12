@@ -285,6 +285,7 @@
     Scheduler.SchedulerTimeType, Scheduler.SchedulerOptions
   > where Scheduler: CombineScheduler
 
+  // From https://github.com/pointfreeco/swift-clocks/blob/fc07645007f9d0e6f91f4321e7df94edb87d0241/Sources/Clocks/Internal/Yield.swift
   extension Task where Success == Failure, Failure == Never {
     // NB: We would love if this was not necessary. See this forum post for more information:
     // https://forums.swift.org/t/reliably-testing-code-that-adopts-swift-concurrency/57304
