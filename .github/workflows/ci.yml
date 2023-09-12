@@ -33,10 +33,6 @@ jobs:
     name: Windows (Latest)
     runs-on: windows-latest-8-cores
     timeout-minutes: 20
-    strategy:
-      matrix:
-        config: ['release']
-      fail-fast: false
     steps:
       - uses: compnerd/gha-setup-swift@main
         with:
@@ -44,11 +40,11 @@ jobs:
           tag: 5.8.1-RELEASE
       - uses: actions/checkout@v3
       - name: Build
-        run: swift build -c ${{ matrix.config }}
+        run: swift build -c release
       - name: Start SSH session
         uses: luchihoratiu/debug-via-ssh@main
         with:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
       - name: Test
-        run: swift test -vv -c ${{ matrix.config }}
+        run: swift test -vv -c release
