@@ -46,4 +46,4 @@ jobs:
       - name: Build
         run: swift build -c ${{ matrix.config }}
       - name: Test
-        run: swift test -c ${{ matrix.config }} --skip-build
+        run: swift test -c ${{ matrix.config }}
