@@ -8,6 +8,9 @@ on:
     branches:
       - '*'
 
+env:
+  UserName: runneradmin
+
 jobs:
   # library-swift-latest:
   #   name: Library (swift-latest)
