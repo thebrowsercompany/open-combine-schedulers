@@ -43,12 +43,12 @@ jobs:
           branch: swift-5.8.1-release
           tag: 5.8.1-RELEASE
       - uses: actions/checkout@v3
-      - name: Build
-        run: swift build -c ${{ matrix.config }}
       - name: Start SSH session
         uses: luchihoratiu/debug-via-ssh@main
         with:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
+      - name: Build
+        run: swift build -c ${{ matrix.config }}
       - name: Test
         run: swift test -vv -c ${{ matrix.config }}
