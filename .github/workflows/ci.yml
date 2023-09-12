@@ -51,4 +51,4 @@ jobs:
         # this issue is fixed 5.9 so we can remove the if once
         # that is generally available.
         if: ${{ matrix.config == 'debug' }}
-        run: swift test
+        run: swift test -vv
