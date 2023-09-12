@@ -8,9 +8,6 @@ on:
     branches:
       - '*'
 
-env:
-  UserName: runneradmin
-
 jobs:
   # library-swift-latest:
   #   name: Library (swift-latest)
@@ -54,5 +51,7 @@ jobs:
         with:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
+        env:
+          UserName: runneradmin
       - name: Test
         run: swift test -vv -c release
