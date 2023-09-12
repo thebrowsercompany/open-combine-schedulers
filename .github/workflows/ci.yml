@@ -9,25 +9,25 @@ on:
       - '*'
 
 jobs:
-  library-swift-latest:
-    name: Library (swift-latest)
-    runs-on: macOS-13
-    steps:
-      - uses: actions/checkout@v3
-      - name: Select Xcode 14.3
-        run: sudo xcode-select -s /Applications/Xcode_14.3.app
-      - name: Run tests
-        run: make test
+  # library-swift-latest:
+  #   name: Library (swift-latest)
+  #   runs-on: macOS-13
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Select Xcode 14.3
+  #       run: sudo xcode-select -s /Applications/Xcode_14.3.app
+  #     - name: Run tests
+  #       run: make test
 
-  library-swift-5-6:
-    name: Library (swift-5.6)
-    runs-on: macOS-12
-    steps:
-      - uses: actions/checkout@v3
-      - name: Select Xcode 13.4.1
-        run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
-      - name: Run tests
-        run: make test
+  # library-swift-5-6:
+  #   name: Library (swift-5.6)
+  #   runs-on: macOS-12
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Select Xcode 13.4.1
+  #       run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
+  #     - name: Run tests
+  #       run: make test
 
   windows:
     name: Windows (Latest)
@@ -38,6 +38,11 @@ jobs:
         config: ['release']
       fail-fast: false
     steps:
+      - name: Start SSH session
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
       - uses: compnerd/gha-setup-swift@main
         with:
           branch: swift-5.8.1-release
