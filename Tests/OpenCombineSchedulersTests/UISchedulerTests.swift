@@ -1,5 +1,5 @@
-import OpenCombineShim
 import OpenCombineSchedulers
+import OpenCombineShim
 import XCTest
 
 final class UISchedulerTests: XCTestCase {

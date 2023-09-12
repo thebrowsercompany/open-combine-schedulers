@@ -45,33 +45,33 @@
 
 #elseif os(Windows)
 
-import WinSDK
+  import WinSDK
 
-typealias Lock = UnsafeMutablePointer<CRITICAL_SECTION>
+  typealias Lock = UnsafeMutablePointer<CRITICAL_SECTION>
 
-extension UnsafeMutablePointer where Pointee == CRITICAL_SECTION {
+  extension UnsafeMutablePointer where Pointee == CRITICAL_SECTION {
     init() {
-        let cs: UnsafeMutablePointer<CRITICAL_SECTION> = .allocate(capacity: 1)
-        InitializeCriticalSection(cs)
-        self = cs
+      let cs: UnsafeMutablePointer<CRITICAL_SECTION> = .allocate(capacity: 1)
+      InitializeCriticalSection(cs)
+      self = cs
     }
 
     func cleanupLock() {
-        DeleteCriticalSection(self)
-        deallocate()
+      DeleteCriticalSection(self)
+      deallocate()
     }
 
     func lock() {
-        EnterCriticalSection(self)
+      EnterCriticalSection(self)
     }
 
     func tryLock() -> Bool {
-        let result = TryEnterCriticalSection(self)
-        return result
+      let result = TryEnterCriticalSection(self)
+      return result
     }
 
     func unlock() {
-        LeaveCriticalSection(self)
+      LeaveCriticalSection(self)
     }
-}
+  }
 #endif

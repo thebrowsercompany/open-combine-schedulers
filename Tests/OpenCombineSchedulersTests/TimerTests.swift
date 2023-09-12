@@ -1,5 +1,5 @@
-import OpenCombineShim
 import OpenCombineSchedulers
+import OpenCombineShim
 import XCTest
 
 final class TimerTests: XCTestCase {
@@ -77,35 +77,35 @@ final class TimerTests: XCTestCase {
   }
 
   #if !os(Linux) && !os(Windows)
-  func testInterleavingTimers() {
-    let scheduler = DispatchQueue.test
+    func testInterleavingTimers() {
+      let scheduler = DispatchQueue.test
 
-    var output: [Int] = []
+      var output: [Int] = []
 
-    Publishers.MergeMany(
-      Publishers.Timer(every: .seconds(2), scheduler: scheduler)
-        .autoconnect()
-        .handleEvents(receiveOutput: { _ in output.append(1) }),
-      Publishers.Timer(every: .seconds(3), scheduler: scheduler)
-        .autoconnect()
-        .handleEvents(receiveOutput: { _ in output.append(2) })
-    )
-    .sink { _ in }
-    .store(in: &self.cancellables)
+      Publishers.MergeMany(
+        Publishers.Timer(every: .seconds(2), scheduler: scheduler)
+          .autoconnect()
+          .handleEvents(receiveOutput: { _ in output.append(1) }),
+        Publishers.Timer(every: .seconds(3), scheduler: scheduler)
+          .autoconnect()
+          .handleEvents(receiveOutput: { _ in output.append(2) })
+      )
+      .sink { _ in }
+      .store(in: &self.cancellables)
 
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [])
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [1])
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [1, 2])
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [1, 2, 1])
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [1, 2, 1])
-    scheduler.advance(by: 1)
-    XCTAssertEqual(output, [1, 2, 1, 1, 2])
-  }
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [])
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [1])
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [1, 2])
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [1, 2, 1])
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [1, 2, 1])
+      scheduler.advance(by: 1)
+      XCTAssertEqual(output, [1, 2, 1, 1, 2])
+    }
   #endif
 
   func testTimerCancellation() {

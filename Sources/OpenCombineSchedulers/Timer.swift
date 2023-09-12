@@ -80,7 +80,7 @@
     /// scheduler.advance(by: 1_000)
     /// XCTAssertEqual(output, Array(0...1_001))
     /// ```
-    public final class Timer<Scheduler:CombineScheduler>: ConnectablePublisher {
+    public final class Timer<Scheduler: CombineScheduler>: ConnectablePublisher {
       public typealias Output = Scheduler.SchedulerTimeType
       public typealias Failure = Never
 
