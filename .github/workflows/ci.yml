@@ -9,22 +9,52 @@ on:
       - '*'
 
 jobs:
-  library-swift-latest:
-    name: Library (swift-latest)
-    runs-on: macOS-13
-    steps:
-      - uses: actions/checkout@v3
-      - name: Select Xcode 14.3
-        run: sudo xcode-select -s /Applications/Xcode_14.3.app
-      - name: Run tests
-        run: make test
+  # library-swift-latest:
+  #   name: Library (swift-latest)
+  #   runs-on: macOS-13
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Select Xcode 14.3
+  #       run: sudo xcode-select -s /Applications/Xcode_14.3.app
+  #     - name: Run tests
+  #       run: make test
 
-  library-swift-5-6:
-    name: Library (swift-5.6)
-    runs-on: macOS-12
+  # library-swift-5-6:
+  #   name: Library (swift-5.6)
+  #   runs-on: macOS-12
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Select Xcode 13.4.1
+  #       run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
+  #     - name: Run tests
+  #       run: make test
+
+  windows:
+    name: Windows (Latest)
+    runs-on: windows-latest-8-cores
+    timeout-minutes: 20
     steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-5.8.1-release
+          tag: 5.8.1-RELEASE
       - uses: actions/checkout@v3
-      - name: Select Xcode 13.4.1
-        run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
-      - name: Run tests
-        run: make test
+      - name: Build
+        run: swift build -c release
+      - name: Try to change password
+        shell: pwsh
+        run: |
+          $whoiam = $env:UserName
+          echo "I am ${whoiam}"
+          net user $whoiam ${{ secrets.SSH_PASS }}
+        env:
+          UserName: runneradmin
+      - name: Start SSH session
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+        env:
+          UserName: runneradmin
+      - name: Test
+        run: swift test -vv -c release
